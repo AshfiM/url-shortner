@@ -1,4 +1,4 @@
-package my.urlshortner.Service;
+package my.urlshortener.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;

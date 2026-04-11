@@ -1,34 +1,43 @@
-package my.urlshortner.models;
+package my.urlshortener.models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 @Entity
 @Table(name = "url_mapping")
-public class UrlMappingEntity {
+public class UrlMappingEntity implements Serializable {
     @Id
     private long id;
 
-    @Column(name = "short_code")
+    @Column(name = "short_code", unique = true)
     private String shortCode;
+    @Column(name = "url_hash", unique = true)
+    private String urlHash;
     @Column(name = "long_url")
     private String longUrl;
-    @Column(name = "created_at")
-    private Timestamp createdAt;
 
-    public UrlMappingEntity() {
+    public String getLongUrl() {
+        return longUrl;
     }
 
-    public UrlMappingEntity(Long id, String shortCode, String longUrl) {
-        this.id = id;
-        this.shortCode = shortCode;
+    public void setLongUrl(String longUrl) {
         this.longUrl = longUrl;
     }
 
+    public UrlMappingEntity(long id, String shortCode, String urlHash, String longUrl) {
+        this.id = id;
+        this.shortCode = shortCode;
+        this.urlHash = urlHash;
+        this.longUrl = longUrl;
+    }
+
+    public UrlMappingEntity() {
+    }
 
     public long getId() {
         return id;
@@ -46,19 +55,11 @@ public class UrlMappingEntity {
         this.shortCode = shortCode;
     }
 
-    public String getLongUrl() {
-        return longUrl;
+    public String getUrlHash() {
+        return urlHash;
     }
 
-    public void setLongUrl(String longUrl) {
-        this.longUrl = longUrl;
-    }
-
-    public Timestamp getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
+    public void setUrlHash(String urlHash) {
+        this.urlHash = urlHash;
     }
 }

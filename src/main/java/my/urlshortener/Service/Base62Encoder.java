@@ -1,4 +1,4 @@
-package my.urlshortner.Service;
+package my.urlshortener.Service;
 
 public class Base62Encoder {
     private static final String alpahbet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";

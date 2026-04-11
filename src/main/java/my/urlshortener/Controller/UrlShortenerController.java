@@ -1,10 +1,11 @@
-package my.urlshortner.controller;
+package my.urlshortener.Controller;
 
 import jakarta.servlet.http.HttpServletResponse;
-import my.urlshortner.Service.Base62Encoder;
-import my.urlshortner.Service.IdRangeService;
-import my.urlshortner.Service.UrlService;
-import my.urlshortner.models.UrlMappingEntity;
+import my.urlshortener.Service.Base62Encoder;
+import my.urlshortener.Service.HashingService;
+import my.urlshortener.Service.IdRangeService;
+import my.urlshortener.Service.UrlService;
+import my.urlshortener.models.UrlMappingEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,14 +13,15 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/api")
-public class UrlShortnerController {
+public class UrlShortenerController {
     private final UrlService urlService;
     private final IdRangeService idRangeService;
 
-    public UrlShortnerController(UrlService urlService, IdRangeService idRangeService){
+    public UrlShortenerController(UrlService urlService, IdRangeService idRangeService){
         this.urlService = urlService;
         this.idRangeService = idRangeService;
     }
+
 
 
     @GetMapping("/hello")
@@ -29,10 +31,8 @@ public class UrlShortnerController {
 
     @PostMapping(value = "/shorten")
     public String shortener(@RequestBody String longUrl){
-        long id = idRangeService.getNextId();
-        String shortCode = Base62Encoder.encode(id);
-        UrlMappingEntity urlMapping = new UrlMappingEntity(id,shortCode,longUrl);
-        urlService.addMapping(urlMapping);
+
+        String shortCode = urlService.addMapping(longUrl);
         return "http://localhost:8080/" + shortCode;
 
     }

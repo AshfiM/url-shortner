@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <title>URL Shortener</title>
+    <link th:href="@{../app.css}" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>URL Shortener</h1>
+    </header>
+    <main>
+        <form th:action="@{/submit}" method="post" th:object="${linkForm}" onsubmit="disableButton()" id="urlForm">
+            <div>
+                <label for="url">Enter Long URL</label>
+                <input type="url" id="url" th:field="*{url}">
+            </div>
+            <div>
+                <button type="submit" id="submitBtn">Submit</button>
+            </div>
+        </form>
+        <script>
+            function disableButton() {
+                const btn = document.getElementById('submitBtn');
+                const form = document.getElementById('urlForm');
+
+                // Only disable if the form is actually valid (HTML5 validation)
+                if (form.checkValidity()) {
+                    btn.disabled = true;
+                    btn.innerText = "Processing...";
+                    btn.style.opacity = "0.5";
+                    btn.style.cursor = "not-allowed";
+                }
+            }
+        </script>
+        <div class="shortLink">
+            <h3>Short URL</h3>
+            <p th:text="${message}">short</p>
+            <p class="short">
+                <a th:href="${message}" th:ref="${message}" target="_blank">Open Link</a>
+            </p>
+        </div>
+
+    </main>
+    <footer>
+        <h4 >DC APP</h4>
+    </footer>
+
+
+</body>
+</html>
