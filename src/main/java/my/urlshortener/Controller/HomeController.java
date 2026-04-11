@@ -9,6 +9,7 @@ import my.urlshortener.Service.UrlService;
 import my.urlshortener.models.LinkForm;
 import my.urlshortener.models.UrlMappingEntity;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,17 +24,15 @@ public class HomeController {
     private final UrlService urlService;
 
 
-    @Value("${host.domain}")
-    private String domain;
-    @Value("${host.port}")
-    private String port;
+    @Value("${app.base.url}")
+    private String baseUrl;
+
 
     public HomeController(UrlService urlService){
         this.urlService = urlService;
 
     }
-
-    @GetMapping("/home")
+    @GetMapping("/")
     public String goHome(Model model){
         model.addAttribute("message", "");
         model.addAttribute("linkForm", new LinkForm());
@@ -49,7 +48,7 @@ public class HomeController {
         }
         String longUrl = linkForm.getUrl();
         String shortCode = urlService.addMapping(longUrl);
-        String shortUrl = domain + port + "/api/" + shortCode;
+        String shortUrl = "/api/" + shortCode;
         model.addAttribute("message", shortUrl);
         model.addAttribute("linkForm", new LinkForm());
         return "app";
