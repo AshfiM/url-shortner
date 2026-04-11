@@ -50,6 +50,7 @@ public class HomeController {
         String shortCode = urlService.addMapping(longUrl);
         String shortUrl = baseUrl + "/api/" + shortCode;
         model.addAttribute("message", shortUrl);
+        model.addAttribute("url", "/api/"+shortCode);
         model.addAttribute("linkForm", new LinkForm());
         return "app";
     }
