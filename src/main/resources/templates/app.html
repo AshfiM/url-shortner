@@ -6,19 +6,31 @@
     <link th:href="@{../app.css}" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <h1>URL Shortener</h1>
-    </header>
+
     <main>
-        <form th:action="@{/submit}" method="post" th:object="${linkForm}" onsubmit="disableButton()" id="urlForm">
-            <div>
-                <label for="url">Enter Long URL</label>
-                <input type="url" id="url" th:field="*{url}">
+        <div class="imgCon">
+            <img th:src="@{/app.png}" alt="banner">
+        </div>
+        <div class="appBody">
+            <form th:action="@{/submit}" method="post" th:object="${linkForm}" onsubmit="disableButton()" id="urlForm">
+                <div class="inputCon">
+
+                    <input type="url" id="url" th:field="*{url}" placeholder="Enter Long URL">
+                </div>
+                <div>
+                    <button type="submit" id="submitBtn">Submit</button>
+                </div>
+            </form>
+            <div class="shortLink" th:if="${url!=null}">
+
+                <p th:text="${message}">short</p>
+                <p class="short">
+                    <a th:href="${url}" th:ref="${url}" target="_blank">Open Link</a>
+                </p>
             </div>
-            <div>
-                <button type="submit" id="submitBtn">Submit</button>
-            </div>
-        </form>
+        </div>
+
+
         <script>
             function disableButton() {
                 const btn = document.getElementById('submitBtn');
@@ -33,19 +45,9 @@
                 }
             }
         </script>
-        <div class="shortLink">
-            <h3>Short URL</h3>
-            <p th:text="${message}">short</p>
-            <p class="short">
-                <a th:href="${url}" th:ref="${url}" target="_blank">Open Link</a>
-            </p>
-        </div>
+
 
     </main>
-    <footer>
-        <h4 >DC APP</h4>
-    </footer>
-
 
 </body>
 </html>
