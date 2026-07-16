@@ -1,7 +1,7 @@
 ```mermaid
 ---
 config:
-  theme: redux
+  theme: mc
   layout: fixed
 ---
 flowchart TB
