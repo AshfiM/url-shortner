@@ -37,3 +37,4 @@ build/
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
 /src/logs/
+.DS_Store
