@@ -1,3 +1,6 @@
+# URL SHORTENER APP
+Takes the long user URL and return shortened url 
+## Architecture Diagram
 ```mermaid
 ---
 config:
@@ -17,7 +20,22 @@ flowchart TB
 
     n1@{ shape: rect}
     n8@{ shape: decision}
-    n10@{ shape: rect}
+    n10@{ shape: rect}---
+config:
+  theme: mc
+  layout: fixed
+---
+flowchart TB
+    Start(["User submits Long URL"]) --> Controller["Controller<br>POST /api/create-short-url"]
+    Controller --> Hash["Generate SHA-256 Hash"]
+    Hash --> Check{"URL Hash<br>Already Exists?"}
+    Check -- Yes --> Existing["Return Existing<br>Short Code"]
+    Existing --> Response["Return Short URL"]
+    Check -- No --> Create["Create UrlMappingEntity"]
+    Create --> Save["Save Entity<br>(ID Auto Generated)"]
+    Save --> Encode["Generate Base62<br>Short Code from ID"]
+    Encode --> Update["Update Entity with<br>Short Code"]
+    Update --> Response
     n9@{ shape: text}
     n11@{ shape: text}
     n12@{ shape: text}
