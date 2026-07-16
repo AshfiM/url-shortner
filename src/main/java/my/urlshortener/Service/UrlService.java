@@ -40,8 +40,11 @@ public class UrlService {
 
 
     }
-
-//    @Cacheable(value = "url_cache", key = "#shortCode")
+    //value - cache name
+    //key - access the cache data using the key
+    //unless - not saving values in cache when result is null or empty
+    //get cacheName::key - returns the values for that key in that cache
+    @Cacheable(value = "shortCodes", key="#shortCode", unless ="#result == null || #result.isEmpty()" )
     public String findShortCode(String shortCode) {
         try {
             return urlRepository.findByShortCode(shortCode).getLongUrl();
