@@ -1,0 +1,9 @@
+controller
+    |
+redis cache
+    |
+    |
+ check short code exist
+    |               |
+    | yes           | no
+    return          get the hash for url

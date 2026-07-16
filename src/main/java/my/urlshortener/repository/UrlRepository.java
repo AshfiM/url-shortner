@@ -8,6 +8,6 @@ public interface UrlRepository extends JpaRepository<UrlMappingEntity, Long> {
 
     UrlMappingEntity findByShortCode(String shortCode);
 
-    @Cacheable(value = "hash_cache", key = "#urlHash")
+    //   @Cacheable(value = "hash_cache", key = "#urlHash")
     UrlMappingEntity findByUrlHash(String urlHash);
 }
