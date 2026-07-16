@@ -5,40 +5,72 @@ Takes the long user URL and return shortened url
 ---
 config:
   theme: mc
-  layout: fixed
+  layout: dagre
 ---
 flowchart TB
 
-    Start([User submits Long URL])
+%% ----------------------------
+%% URL Creation
+%% ----------------------------
 
-    Controller["Controller<br/>POST /api/create-short-url"]
+Start([User submits Long URL])
 
-    Hash["Generate SHA-256 Hash"]
+Controller["Controller<br/>POST /api/create-short-url"]
 
-    Check{"URL Hash<br/>Already Exists?"}
+Hash["Generate SHA-256 Hash"]
 
-    Existing["Return Existing<br/>Short Code"]
+Check{"URL Hash<br/>Already Exists?"}
 
-    Create["Create UrlMappingEntity"]
+Existing["Return Existing<br/>Short Code"]
 
-    Save["Save Entity<br/>(ID Auto Generated)"]
+Create["Create UrlMappingEntity"]
 
-    Encode["Generate Base62<br/>Short Code from ID"]
+Save["Save Entity<br/>(ID Auto Generated)"]
 
-    Update["Update Entity with<br/>Short Code"]
+Encode["Generate Base62<br/>Short Code from ID"]
 
-    Response["Return Short URL"]
+Update["Update Entity with<br/>Short Code"]
 
-    Start --> Controller
-    Controller --> Hash
-    Hash --> Check
+Response["Return Short URL"]
 
-    Check -- Yes --> Existing
-    Existing --> Response
+Start --> Controller
+Controller --> Hash
+Hash --> Check
 
-    Check -- No --> Create
-    Create --> Save
-    Save --> Encode
-    Encode --> Update
-    Update --> Response
+Check -- Yes --> Existing
+Existing --> Response
+
+Check -- No --> Create
+Create --> Save
+Save --> Encode
+Encode --> Update
+Update --> Response
+
+%% ----------------------------
+%% URL Redirection
+%% ----------------------------
+
+Click([User clicks Short URL])
+
+RedirectController["Controller<br/>GET /api/{shortCode}"]
+
+Cache{"Short Code<br/>Found in Cache?"}
+
+CacheHit["Retrieve Long URL<br/>from Cache"]
+
+Database["Retrieve Long URL<br/>from Database"]
+
+UpdateCache["Store Long URL<br/>in Cache"]
+
+Redirect["HTTP 302 Redirect<br/>to Original URL"]
+
+Click --> RedirectController
+RedirectController --> Cache
+
+Cache -- Yes --> CacheHit
+CacheHit --> Redirect
+
+Cache -- No --> Database
+Database --> UpdateCache
+UpdateCache --> Redirect
 ```
