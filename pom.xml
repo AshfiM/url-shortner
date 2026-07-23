@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>my</groupId>
-    <artifactId>url-shortener</artifactId>
+    <artifactId>urlshortener</artifactId>
     <name>url-shortner</name>
-    <description>url-shortner</description>
+    <description>url-shortener</description>
     <url/>
     <licenses>
         <license/>
@@ -91,8 +91,6 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.46</version>
-            <scope>provided</scope>
         </dependency>
 
     </dependencies>
@@ -100,9 +98,21 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.14.1</version>
+                <configuration>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
             </plugin>
+
+            <!-- Spring Boot Plugin -->
+
         </plugins>
     </build>
 

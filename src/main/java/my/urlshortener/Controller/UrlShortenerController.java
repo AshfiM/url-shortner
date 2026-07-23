@@ -1,19 +1,23 @@
 package my.urlshortener.Controller;
 
 import jakarta.servlet.http.HttpServletResponse;
-import my.urlshortener.Service.Base62Encoder;
-import my.urlshortener.Service.HashingService;
+
 import my.urlshortener.Service.IdRangeService;
 import my.urlshortener.Service.UrlService;
-import my.urlshortener.models.UrlMappingEntity;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
+
 public class UrlShortenerController {
     @Value("${DOMAIN}")
     private  String DOMAIN;
@@ -31,8 +35,15 @@ public class UrlShortenerController {
 
 
     @GetMapping("/hello")
-    public ResponseEntity<String> test(){
-        return ResponseEntity.ok("hello world");
+    public ResponseEntity<Map<String, String>> test(){
+        String host;
+        try {
+            host = InetAddress.getLocalHost().getHostName();
+
+        } catch (UnknownHostException e) {
+            throw new RuntimeException("unknow host");
+        }
+        return ResponseEntity.ok().body(Map.of("msg", "hello", "hostname", host));
     }
 
     @PostMapping(value = "/create-short-url")

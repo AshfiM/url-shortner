@@ -7,9 +7,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
-import static io.lettuce.core.ShutdownArgs.Builder.save;
 
 @Service
 @Slf4j
