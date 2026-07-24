@@ -1,0 +1,34 @@
+services:
+  app_con:
+    image: local-url-short
+    container_name: "app_con"
+    ports:
+      - 8083:8084
+    depends_on:
+      - db
+      - cache
+    environment:
+      - SERVER_PORT=8084
+      - DOMAIN=app_con
+      - PROFILE=docker
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/mydatabase
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=1234
+      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=com.mysql.cj.jdbc.Driver
+      - SPRING_CACHE_TYPE=redis
+      - SPRING_DATA_REDIS_HOST=cache
+      - SPRING_DATA_REDIS_PORT=6379
+      - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_CACHE=TRACE
+  db:
+    image: mysql:oraclelinux9
+    container_name: "db_con"
+    ports:
+      - 3308:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: mydatabase
+  cache:
+    image: redis:latest
+    container_name: "cache_con"
+    ports:
+      - 6389:6379
