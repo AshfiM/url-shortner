@@ -1,15 +1,15 @@
 services:
   app_con:
-    image: local-url-short
+    image: ashfiuzama/url-shortener:v1
     container_name: "app_con"
     ports:
-      - 8083:8084
+      - 8083:8083
     depends_on:
       - db
       - cache
     environment:
-      - SERVER_PORT=8084
-      - DOMAIN=app_con
+      - SERVER_PORT=8083
+      - DOMAIN=localhost
       - PROFILE=docker
       - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/mydatabase
       - SPRING_DATASOURCE_USERNAME=root
