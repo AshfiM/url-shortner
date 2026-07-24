@@ -40,3 +40,5 @@ build/
 .DS_Store
 **/.DS_Store
 .env.dev
+.env.docker
+
