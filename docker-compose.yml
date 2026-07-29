@@ -1,3 +1,4 @@
+name: url-shortener-api
 services:
   app_con:
     image: ashfiuzama/url-shortener:v1
